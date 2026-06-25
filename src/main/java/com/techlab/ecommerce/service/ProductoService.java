@@ -16,13 +16,30 @@ public class ProductoService {
 
   private List<Producto> productos = new ArrayList<>();
 
+  private static int contadorId = 1;
+
+  /*
   //Agregar nuevo producto.
   public void agregar(String nombre, double precio, int stock) {
     Producto nuevo = new Producto(nombre, precio, stock);
     productos.add(nuevo);
     System.out.println("Producto agregado: " + nuevo);
   }
+*/
 
+   // CREATE: agrega un nuevo producto al catálogo.
+    public Producto agregar(Producto p) {
+        // El id lo asigna el servicio, no el usuario. Después de
+      p.setId(contadorId);    // asignarlo, incrementamos el contador para el próximo.
+      contadorId++;
+      productos.add(p);
+      System.out.println("Producto guardado: " + p); // <-- agrega esto para verificar que el producto se guardó correctamente
+      return p;
+    }
+
+
+
+/*
   //Modificar datos de un producto
   public void modificar (int id, String nombre, double precio, int stock) {
     Producto p = buscarPorId(id);
@@ -31,6 +48,25 @@ public class ProductoService {
     p.setStock(stock);
     System.out.println("Producto modificado: " + p);
   }
+
+ */
+
+  public Producto modificar(int id, Producto datos) {
+    // Reutilizamos obtenerPorId: si no existe, lanza excepción
+    // y la actualización se cancela automáticamente.
+    Producto p = buscarPorId(id);
+    // Modificamos el producto encontrado. Como Java pasa los
+    // objetos por referencia, los cambios se reflejan en la
+    // lista sin necesidad de hacer nada más.
+
+    p.setNombre(datos.getNombre());
+    p.setPrecio(datos.getPrecio());
+    p.setStock(datos.getStock());
+
+    return p;
+    }
+
+
 
 
   //Listar todos los productos.

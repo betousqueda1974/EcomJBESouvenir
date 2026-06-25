@@ -19,10 +19,17 @@ public class EcommerceApplication {
 	@Bean
     public CommandLineRunner cargarDatos(ProductoService service) {
         return args -> {
+					/*
             service.agregar("Café molido 500g", 4500, 30);
 						service.agregar("Yerba mate 1kg", 3200, 50);
 						service.agregar("Galletitas dulces", 1850, 100);
-/*
+ */
+
+						service.agregar(new Producto ("Café molido 500g", 4500, 30));
+						service.agregar(new Producto ("Yerba mate 1kg", 3200, 50));
+						service.agregar(new Producto ("Galletitas dulces", 1850, 100));
+
+						/*
 						service.guardar(new Producto("Café molido 500g", 4500, 30, "Bebidas"));
             service.guardar(new Producto("Yerba mate 1kg", 3200, 50, "Bebidas"));
             service.guardar(new Producto("Galletitas dulces", 1850, 100, "Almacén"));
