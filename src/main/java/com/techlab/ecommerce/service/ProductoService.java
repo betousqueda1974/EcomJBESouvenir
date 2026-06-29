@@ -29,6 +29,17 @@ public class ProductoService {
 
    // CREATE: agrega un nuevo producto al catálogo.
     public Producto agregar(Producto p) {
+      //Validaciones
+      if (p.getNombre() == null || p.getNombre().isBlank()) {
+        throw new IllegalArgumentException("El nombre del producto no puede estar vacío.");
+      }
+      if (p.getPrecio() <= 0) {
+        throw new PrecioInvalido("El precio debe ser mayor a cero. Se recibió: " + p.getPrecio());
+      }
+      if (p.getStock() < 0) {
+        throw new StockInsuficiente("El stock no puede ser negativo. Se recibió: " + p.getStock());
+      }
+
         // El id lo asigna el servicio, no el usuario. Después de
       p.setId(contadorId);    // asignarlo, incrementamos el contador para el próximo.
       contadorId++;
@@ -52,6 +63,17 @@ public class ProductoService {
  */
 
   public Producto modificar(int id, Producto datos) {
+    //Validaciones
+    if (datos.getNombre() == null || datos.getNombre().isBlank()) {
+      throw new IllegalArgumentException("El nombre del producto no puede estar vacío.");
+    }
+    if (datos.getPrecio() <= 0) {
+      throw new PrecioInvalido("El precio debe ser mayor a cero. Se recibió: " + datos.getPrecio());
+    }
+    if (datos.getStock() < 0) {
+      throw new StockInsuficiente("El stock no puede ser negativo. Se recibió: " + datos.getStock());
+    }
+    
     // Reutilizamos obtenerPorId: si no existe, lanza excepción
     // y la actualización se cancela automáticamente.
     Producto p = buscarPorId(id);
