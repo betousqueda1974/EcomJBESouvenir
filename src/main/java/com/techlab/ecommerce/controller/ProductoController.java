@@ -2,7 +2,7 @@ package com.techlab.ecommerce.controller;
 
 import java.util.List;
 
-import org.springframework.boot.CommandLineRunner;
+//import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,7 +27,7 @@ public class ProductoController {
  // private final CommandLineRunner cargarDatos;
   private final ProductoService service; // Inyección por constructor — ProductoService no se crea con new. Spring lo crea automáticamente y se lo pasa al controlador.
 
-  public ProductoController(ProductoService service, CommandLineRunner cargarDatos) {
+  public ProductoController(ProductoService service) {
       this.service = service;
      // this.cargarDatos = cargarDatos;
   }

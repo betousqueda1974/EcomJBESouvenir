@@ -1,40 +1,52 @@
 package com.techlab.ecommerce.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "producto")
 public class Producto {
 
-  // Contador compartido por todos los objetos. Genera id únicos para cada Producto que se va creando.
-  private static int contadorId = 1;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-  private int id;
-  private String nombre;
-  private double precio;
-  private int stock;
+    @Column(name = "nombre", nullable = false, length = 100)
+    private String nombre;
 
-  public Producto(String nombre, double precio, int stock) {
-    this.id = contadorId++;
-    this.nombre = nombre;
-    this.precio = precio;
-    this.stock = stock;
-  }
+    @Column(name = "precio", nullable = false)
+    private double precio;
 
-  // Getters
-  public int getId() { return id; }
-  public String getNombre() { return nombre; }
-  public double getPrecio() { return precio; }
-  public int getStock() { return stock; }
+    @Column(name = "stock", nullable = false)
+    private int stock;
 
-  // Setters
-  public void setId(int id) {this.id = id;}
-  public void setNombre(String nombre) { this.nombre = nombre; }
-  public void setPrecio(double precio) { this.precio = precio; }
-  public void setStock(int stock) { this.stock = stock; }
+    @Column(name = "categoria", length = 50)
+    private String categoria;
 
+    public Producto(String nombre, double precio, int stock, String categoria) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.stock = stock;
+        this.categoria = categoria;
+    }
 
-  //Se llama automáticamente cuando hacemos System.out.println(producto).
-  @Override
+    public Producto() {
+    }
+
+    // getters y setters sin cambios respecto a la versión actual
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+    public double getPrecio() { return precio; }
+    public void setPrecio(double precio) { this.precio = precio; }
+    public int getStock() { return stock; }
+    public void setStock(int stock) { this.stock = stock; }
+    public String getCategoria() { return categoria; }
+    public void setCategoria(String categoria) { this.categoria = categoria; }
+
+    @Override
     public String toString() {
-      return "[ID: " + id + "] " + nombre +
-            " | Precio: $" + precio +
-            " | Stock: " + stock;
+        return "ID: " + id + " | " + nombre + " | $" + precio +
+               " | Stock: " + stock + " | Categoría: " + categoria;
     }
 }

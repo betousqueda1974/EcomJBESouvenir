@@ -15,7 +15,7 @@ public class EcommerceApplication {
 		SpringApplication.run(EcommerceApplication.class, args);
 	}
 
-
+/*
 	@Bean
     public CommandLineRunner cargarDatos(ProductoService service) {
         return args -> {
@@ -24,7 +24,20 @@ public class EcommerceApplication {
 						service.agregar(new Producto ("Galletitas dulces", 1850, 100));
         };
     }
+ */
 
 
+		// Carga datos iniciales SOLO si la base está vacía.
+    // Así evitamos duplicar los productos en cada reinicio.
+  @Bean
+  CommandLineRunner cargarDatos(ProductoService productoService) {
+    return args -> {
+      if (productoService.listar().isEmpty()) {
+          productoService.agregar(new Producto("Yerba 1kg", 3200, 50, "Almacén"));
+          productoService.agregar(new Producto("Aceite 1.5L", 4100, 30, "Almacén"));
+          productoService.agregar(new Producto("Fideos 500g", 1500, 80, "Almacén"));
+      }
+    };
+  }
 
 }
