@@ -1,23 +1,13 @@
 package com.techlab.ecommerce.service;
 
-
 import com.techlab.ecommerce.model.*;
 import com.techlab.ecommerce.repository.ProductoRepository;
 import com.techlab.ecommerce.exception.*;
 import org.springframework.stereotype.Service;
-
-//import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ProductoService {
-
-  // Lista en memoria
-  //private ArrayList<Producto> productos = new ArrayList<>();
-
-  //private List<Producto> productos = new ArrayList<>();
-
-  //private static int contadorId = 1;
 
   //Inyección por constructor. SpringBoot pasa el repositorio
   private final ProductoRepository repository;
@@ -38,7 +28,6 @@ public class ProductoService {
       if (p.getStock() < 0) {
         throw new StockInsuficiente("El stock no puede ser negativo. Se recibió: " + p.getStock());
       }
-
       return repository.save(p);
     }
 
@@ -54,8 +43,7 @@ public class ProductoService {
     if (datos.getStock() < 0) {
       throw new StockInsuficiente("El stock no puede ser negativo. Se recibió: " + datos.getStock());
     }
-    
-    //Si no existe, lanza excepción
+
     Producto p = buscarPorId(id);
    
     p.setNombre(datos.getNombre());
@@ -73,15 +61,8 @@ public class ProductoService {
 
   //Buscar producto por ID.
   public Producto buscarPorId(int id) {
-    /* for (Producto p : productos) {
-      if (p.getId() == id) {
-        return p;
-      }
-    }
-    // Si llegamos acá es porque no lo encontramos
-    throw new ProductoNoEncontrado(id); */
-     return repository.findById(id)
-       .orElseThrow(() -> new ProductoNoEncontrado(id));
+    return repository.findById(id)
+      .orElseThrow(() -> new ProductoNoEncontrado(id));
   }
 /*
   //Buscar producto por nombre
@@ -100,9 +81,5 @@ public class ProductoService {
   public void eliminar(int id) {
     Producto p = buscarPorId(id);
     repository.delete(p);
-    /*
-    productos.remove(p);
-    System.out.println("Producto eliminado: " + p.getNombre());
-    */
   }
 }

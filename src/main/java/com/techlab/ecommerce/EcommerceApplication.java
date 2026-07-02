@@ -5,7 +5,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.techlab.ecommerce.model.Categoria;
 import com.techlab.ecommerce.model.Producto;
+import com.techlab.ecommerce.service.CategoriaService;
 import com.techlab.ecommerce.service.ProductoService;
 
 @SpringBootApplication
@@ -29,7 +31,7 @@ public class EcommerceApplication {
 
 		// Carga datos iniciales SOLO si la base está vacía.
     // Así evitamos duplicar los productos en cada reinicio.
-  @Bean
+/*   @Bean
   CommandLineRunner cargarDatos(ProductoService productoService) {
     return args -> {
       if (productoService.listar().isEmpty()) {
@@ -39,5 +41,23 @@ public class EcommerceApplication {
       }
     };
   }
+ */
+
+   @Bean
+    CommandLineRunner cargarDatos(ProductoService productoService, CategoriaService categoriaService) {
+        return args -> {
+            if (categoriaService.listar().isEmpty()) {
+                Categoria kiosco = categoriaService.agregar(new Categoria("Almacén", "Productos de almacén"));
+                Categoria drinks = categoriaService.agregar(new Categoria("Bebidas", "Bebidas y líquidos"));
+
+                productoService.agregar(new Producto("Yerba 1kg", 3200, 50, kiosco));
+                productoService.agregar(new Producto("Aceite 1.5L", 4100, 30, kiosco));
+                productoService.agregar(new Producto("Agua 2L", 900, 80, drinks));
+            }
+        };
+    }
+
+
+
 
 }

@@ -19,10 +19,11 @@ public class Producto {
     @Column(name = "stock", nullable = false)
     private int stock;
 
-    @Column(name = "categoria", length = 50)
-    private String categoria;
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
 
-    public Producto(String nombre, double precio, int stock, String categoria) {
+    public Producto(String nombre, double precio, int stock, Categoria categoria) {
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
@@ -32,7 +33,6 @@ public class Producto {
     public Producto() {
     }
 
-    // getters y setters sin cambios respecto a la versión actual
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     public String getNombre() { return nombre; }
@@ -41,12 +41,14 @@ public class Producto {
     public void setPrecio(double precio) { this.precio = precio; }
     public int getStock() { return stock; }
     public void setStock(int stock) { this.stock = stock; }
-    public String getCategoria() { return categoria; }
-    public void setCategoria(String categoria) { this.categoria = categoria; }
+    public Categoria getCategoria() { return categoria; }
+    public void setCategoria(Categoria categoria) { this.categoria = categoria; }
 
     @Override
     public String toString() {
+        String nombreCat = (categoria != null) ? categoria.getNombre() : "Sin categoría";
         return "ID: " + id + " | " + nombre + " | $" + precio +
-               " | Stock: " + stock + " | Categoría: " + categoria;
+                " | Stock: " + stock + " | Categoría: " + nombreCat;
     }
+
 }
